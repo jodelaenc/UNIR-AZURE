@@ -1,0 +1,15 @@
+---
+- name: Autenticar en ACR
+  shell: az acr login --name jodelaencdevops
+
+- name: Etiquetar imagen de Nginx para ACR
+  shell: podman tag nginx jodelaencdevops.azurecr.io/nginx:latest
+
+- name: Subir imagen de Nginx a ACR
+  shell: podman push jodelaencdevops.azurecr.io/nginx:latest
+
+- name: Etiquetar imagen de WordPress para ACR
+  shell: podman tag wordpress jodelaencdevops.azurecr.io/wordpress:latest
+
+- name: Subir imagen de WordPress a ACR
+  shell: podman push jodelaencdevops.azurecr.io/wordpress:latest

@@ -1,0 +1,22 @@
+---
+  - name: Instalar Podman
+    apt:
+        name: podman
+        state: present
+  - name: Verificar que Podman está instalado
+    command: podman --version
+    register: podman_installed
+    changed_when: false
+
+  - name: Descargar la imagen de Nginx
+    shell: podman pull nginx:latest
+
+  - name: Eliminar contenedor de Nginx si ya existe
+    shell: podman rm -f nginx
+    ignore_errors: yes
+
+  - name: Ejecutar contenedor Nginx con Podman
+    shell: podman run -d --name nginx -p 80:80 nginx:latest
+
+  - name: Ejecutar Nginx en Podman desde ACR
+    shell: podman run -d --name nginx -p 80:80 jodelaencdevops.azurecr.io/nginx:latest
